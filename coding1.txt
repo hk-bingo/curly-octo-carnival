@@ -1,0 +1,31 @@
+# include <iostream>
+# include <fstream>
+# include <string>
+
+using namespace std;
+
+int main(){
+
+    string text,temp;
+    const string find_word = "NDHUIM";
+    const string replace_word = "ndhuim";
+    int word_length = find_word.length();
+    int start_pos=0;
+
+    ifstream ReadFile("infile.txt");
+
+    while (getline(ReadFile, temp)) {
+        text += temp + '\n';
+    }
+    int text_len = text.length();
+    text = text.substr(0,text_len-1);
+
+    while(text.find(find_word,start_pos) > 0 && text.find(find_word,start_pos) < text_len){
+        text = text.replace(text.find(find_word,start_pos),word_length,replace_word);
+        start_pos++;
+    }
+    ofstream NewFile("output.txt");
+    new_file << text;
+
+    return 0;
+}

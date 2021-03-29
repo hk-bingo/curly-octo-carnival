@@ -1,0 +1,54 @@
+# include <iostream>
+# include <fstream>
+# include <string>
+# include <cstring>
+
+using namespace std;
+
+double BMI(double height[10],double weight[10],double bmi[10],int people);
+
+int main(){
+
+    double height[10];
+    double weight[10];
+    double bmi[10];
+    char str[10];
+    string temp;
+    int i = 0, j = 0;
+
+    ifstream HeightFile("height.txt");
+    ifstream WeightFile("weight.txt");
+
+    while (getline(HeightFile, temp)) {
+        strcpy(str, temp.c_str( ) );
+        height[i] = atof(str) / 100;
+        i++;
+    }
+
+    while (getline(WeightFile, temp)) {
+        strcpy(str, temp.c_str( ) );
+        weight[j] = atof(str);
+        j++;
+    }
+
+    BMI(height,weight,bmi,i);
+
+
+    return 0;
+}
+
+double BMI(double height[10],double weight[10],double bmi[10],int people){
+    int k;
+    double temp_save = 0;
+    for(k=0;k<people;k++){
+        temp_save = (weight[k] / (height[k] * height[k]) );
+        temp_save = ((int)(temp_save * 1000 + 0.5 )) / 1000.0;
+        bmi[k] = temp_save;
+        cout << bmi[k];
+        if(k<people-1){
+            cout << endl;
+        }
+
+    }
+}
+
