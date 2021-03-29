@@ -1,54 +1,31 @@
 # include <iostream>
 # include <fstream>
 # include <string>
-# include <cstring>
 
 using namespace std;
 
-double BMI(double height[10],double weight[10],double bmi[10],int people);
-
 int main(){
 
-    double height[10];
-    double weight[10];
-    double bmi[10];
-    char str[10];
-    string temp;
-    int i = 0, j = 0;
+    string text,temp;
+    const string find_word = "NDHUIM";
+    const string replace_word = "ndhuim";
+    int word_length = find_word.length();
+    int start_pos=0;
 
-    ifstream HeightFile("height.txt");
-    ifstream WeightFile("weight.txt");
+    ifstream Readfile("infile.txt");
 
-    while (getline(HeightFile, temp)) {
-        strcpy(str, temp.c_str( ) );
-        height[i] = atof(str) / 100;
-        i++;
+    while (getline(Readfile, temp)) {
+        text += temp + '\n';
     }
+    int text_len = text.length();
+    text = text.substr(0,text_len-1);
 
-    while (getline(WeightFile, temp)) {
-        strcpy(str, temp.c_str( ) );
-        weight[j] = atof(str);
-        j++;
+    while(text.find(find_word,start_pos) != string::npos){
+        text = text.replace(text.find(find_word,start_pos),word_length,replace_word);
+        start_pos++;
     }
-
-    BMI(height,weight,bmi,i);
-
+    ofstream NewFile("output.txt");
+    NewFile << text;
 
     return 0;
 }
-
-double BMI(double height[10],double weight[10],double bmi[10],int people){
-    int k;
-    double temp_save = 0;
-    for(k=0;k<people;k++){
-        temp_save = (weight[k] / (height[k] * height[k]) );
-        temp_save = ((int)(temp_save * 1000 + 0.5 )) / 1000.0;
-        bmi[k] = temp_save;
-        cout << bmi[k];
-        if(k<people-1){
-            cout << endl;
-        }
-
-    }
-}
-
